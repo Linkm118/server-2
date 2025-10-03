@@ -35,7 +35,7 @@
     <!-- データが取得できたときにdl要素を表示する -->
     <label
       >地域：
-      <select>
+      <select v-model="area">
         <option value="130">東京</option>
         <option value="270">大阪</option>
       </select>
@@ -43,7 +43,7 @@
 
     <label
       >チャンネル：
-      <select>
+      <select v-model="service">
         <option value="g1">NHK 総合1</option>
         <option value="s1">NHK BS1</option>
         <option value="r3">NHK FM</option>
@@ -75,10 +75,13 @@
         date: 20251003,
 
         // 関数（メソッド）
-        async fetchData() {
+        async getProgramList() {
           const res = await fetch(
             `https://api.nhk.or.jp/v2/pg/list/${this.area}/${this.service}/${this.date}.json?key=${this.apikey}`
           );
+          const obj = await res.json();
+          this.list = obj.list.g1;
+          console.log(JSON.stringify(this.list));
         }
       };
     }
