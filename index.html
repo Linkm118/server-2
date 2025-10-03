@@ -57,7 +57,7 @@
         <th>内容</th>
       </tr>
       <tr v-for="(item, i) in list">
-        <td>{{item.start_time}}</td>
+        <td>{{formatTime(i)}}</td>
         <td>{{item.title}}</td>
         <td>{{item.content}}</td>
       </tr>
@@ -81,7 +81,12 @@
           );
           const obj = await res.json();
           this.list = obj.list.g1;
-          console.log(JSON.stringify(this.list));
+        },
+
+        formatTime(i) {
+          const time = this.list[i].start_time.split('T');
+          const startTime = time[1].split(':');
+          return startTime[0] + ':' + startTime[1];
         }
       };
     }
